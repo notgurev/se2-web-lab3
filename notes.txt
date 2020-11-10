@@ -1,0 +1,3 @@
+selectBooleanCheckBox -4 ... 4 integer
+inputText (-3 ... 3) float
+commandButton 1 1.5 2 2.5 3
