@@ -13,16 +13,23 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.12</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
             <groupId>javax.enterprise</groupId>
             <artifactId>cdi-api</artifactId>
             <version>1.2</version>
         </dependency>
-        <dependency>
-            <groupId>javax</groupId>
-            <artifactId>javaee-api</artifactId>
-            <version>8.0</version>
-            <scope>provided</scope>
-        </dependency>
+        <!--убрал потому что deprecated аннотации были-->
+        <!--        <dependency>-->
+        <!--            <groupId>javax</groupId>-->
+        <!--            <artifactId>javaee-api</artifactId>-->
+        <!--            <version>8.0</version>-->
+        <!--            <scope>provided</scope>-->
+        <!--        </dependency>-->
         <dependency>
             <groupId>javax.faces</groupId>
             <artifactId>jsf-api</artifactId>
