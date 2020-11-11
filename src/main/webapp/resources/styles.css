@@ -1,4 +1,3 @@
-
 /* Не факт что пригодится, просто оставлю тут */
 
 :root {
@@ -34,4 +33,12 @@
     position: absolute;
     top: 0;
     left: 0;
+}
+
+.manual-input-block {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    align-items: center;
 }
