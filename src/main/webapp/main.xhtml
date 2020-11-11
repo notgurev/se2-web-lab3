@@ -7,9 +7,62 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 <h:head>
-    <title>Welcome</title>
+    <title>Main page</title>
+    <h:outputStylesheet name="styles.css" />
+    <h:outputStylesheet name="css/primeflex.css"/>
 </h:head>
 <h:body>
-
+    <div class="p-grid">
+        <div class="p-col">
+            <p:panel header="Canvas">
+                <div id="graph-picture">
+                    <canvas id="background-canvas" style="z-index: 0" width="500" height="500">
+                        Canvas not supported
+                    </canvas>
+                    <canvas id="foreground-canvas" style="z-index: 1" width="500" height="500">
+                        Canvas not supported
+                    </canvas>
+                </div>
+            </p:panel>
+        </div>
+        <div class="p-col">
+            <p:panel header="Manual inputs">
+                <h:outputText value="" />
+            </p:panel>
+        </div>
+        <div class="p-col">
+            <p:panel header="Results">
+                <h:outputText value="" />
+            </p:panel>
+        </div>
+    </div>
+<!--    <div id="canvas-div">-->
+<!--        PLACEHOLDER-->
+<!--    </div>-->
+<!--    <p:panel id="manual-inputs-panel">-->
+<!--        <h:form>-->
+<!--            <p:messages id="messages"/> &lt;!&ndash;whatever this is&ndash;&gt;-->
+<!--            <p:panelGrid columns="2">-->
+<!--                <h:outputLabel for="x-checkboxes" value="X"/>-->
+<!--                <div id="x-checkboxes">-->
+<!--                    -->
+<!--                </div>-->
+<!--            </p:panelGrid>-->
+<!--        </h:form>-->
+<!--    </p:panel>-->
+<!--    <h:selectBooleanCheckbox value="#{hit.xArray[0]}" label="-4"/>-->
+<!--    <h:selectBooleanCheckbox value="#{hit.xArray[1]}" label="-3"/>-->
+<!--    <h:selectBooleanCheckbox value="#{hit.xArray[2]}" label="-2"/>-->
+<!--    <h:selectBooleanCheckbox value="#{hit.xArray[3]}" label="-1"/>-->
+<!--    <h:selectBooleanCheckbox value="#{hit.xArray[4]}" label="0"/>-->
+<!--    <h:selectBooleanCheckbox value="#{hit.xArray[5]}" label="1"/>-->
+<!--    <h:selectBooleanCheckbox value="#{hit.xArray[6]}" label="2"/>-->
+<!--    <h:selectBooleanCheckbox value="#{hit.xArray[7]}" label="3"/>-->
+<!--    <h:selectBooleanCheckbox value="#{hit.xArray[8]}" label="4"/>-->
+<!--    <h:form id="manualInputsForm">-->
+<!--        &lt;!&ndash; ugly selectBooleanCheckboxes for X, without a label to save space and mental health &ndash;&gt;-->
+<!--        <h:selectBooleanCheckbox styleClass="x-checkbox" value="#{pointsBean.x[0]}"/>-->
+<!--    </h:form>-->
 </h:body>
+<h:outputScript library="js" name="canvas.js"/>
 </html>
