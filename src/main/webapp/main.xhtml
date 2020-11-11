@@ -41,7 +41,7 @@
                     </div>
                     <div class="manual-input-block" id="y-input-text-block">
                         <h:outputLabel id="y-input-text-label" for="y-input-text" value="Y:" style="margin-right: 20px"/>
-                        <p:inputText id="y-input-text" value="#{hit.y}" required="true" style="flex-grow: 200">
+                        <p:inputText id="y-input-text" value="#{hits.y}" required="true" style="flex-grow: 200">
                             <f:validateDoubleRange minimum="-4" maximum="4"/>
                         </p:inputText>
                         <p:watermark for="@previous" value="(-4 ... 4)"/>

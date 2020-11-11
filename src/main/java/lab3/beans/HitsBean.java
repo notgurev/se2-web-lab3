@@ -18,12 +18,10 @@ public class HitsBean {
     private Float y; // both
 
     public void registerHit(float radius, boolean singleX) {
-        y = 2f;
         if (singleX) {
             hitBeansList.add(new HitBean(x, y, radius));
         } else {
             for (int xChecked = 0; xChecked < xArray.length; xChecked++) {
-                System.out.println("TEST");
                 if (xArray[xChecked]) {
                     hitBeansList.add(new HitBean(X_VALUES[xChecked], y, radius));
                 }
