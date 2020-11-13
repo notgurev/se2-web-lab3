@@ -6,6 +6,9 @@ let bCtx = backgroundCanvas.getContext("2d");
 let foregroundCanvas = document.getElementById("foreground-canvas");
 let fCtx = foregroundCanvas.getContext("2d");
 
+let aimCanvas = document.getElementById("aim-canvas");
+let aimCtx = foregroundCanvas.getContext("2d");
+
 let rFieldFromSlider = document.getElementById("hidden-canvas-form:hidden-r");
 let rValueText = document.getElementById("hidden-canvas-form:r-value-text");
 let xCanvasForm = document.getElementById("hidden-canvas-form:hidden-x");
@@ -17,10 +20,45 @@ const CANVAS_CENTER_X = 250;
 const CANVAS_CENTER_Y = 250;
 const R_OFFSET = 200;
 
-// Colors
+// Lines, shapes
 const LINES_COLOR = "#000000";
-const POINT_OUTLINE_COLOR = "#000000";
 const SHAPES_COLOR = "#43b581";
+// Points
+const POINT_OUTLINE_COLOR = "#000000";
+const POINT_OUTLINE_WIDTH = 2;
+const POINT_RADIUS = 4;
+
+aimCtx.strokeStyle = POINT_OUTLINE_COLOR;
+aimCtx.fillStyle = 'yellow';
+aimCtx.lineWidth = 2;
+
+function canvasX(event) {
+    return event.pageX - canvasContainer.offsetLeft;
+}
+
+function canvasY(event) {
+    return event.pageY - canvasContainer.offsetTop;
+}
+
+aimCanvas.addEventListener('mouseout', eraseAim)
+
+aimCanvas.addEventListener('mousemove', e => {
+    eraseAim();
+
+    aimCtx.beginPath();
+
+    let rValue = rFieldFromSlider.value;
+    let scale = rValue / R_OFFSET;
+
+    aimCtx.arc(
+        Math.round((canvasX(e) - CANVAS_CENTER_X) * scale) / scale + CANVAS_CENTER_X,
+        canvasY(e),
+        POINT_RADIUS, 0, 2 * Math.PI
+    );
+    aimCtx.fill();
+    aimCtx.stroke();
+    aimCtx.closePath();
+})
 
 function drawPointOnGraph(x, y, r, successful) {
     fCtx.fillStyle = successful ? "lawngreen" : "red";
@@ -29,7 +67,7 @@ function drawPointOnGraph(x, y, r, successful) {
     fCtx.beginPath();
     fCtx.arc(
         CANVAS_CENTER_X + x * R_OFFSET / r,
-        CANVAS_CENTER_Y - y * R_OFFSET / r, 3, 0, 2 * Math.PI);
+        CANVAS_CENTER_Y - y * R_OFFSET / r, POINT_RADIUS, 0, 2 * Math.PI);
     fCtx.stroke();
     fCtx.fill();
     fCtx.closePath();
@@ -43,6 +81,10 @@ function drawBackground() {
 
 function clearCanvas(context) {
     context.clearRect(0, 0, CANVAS_WH, CANVAS_WH);
+}
+
+function eraseAim() {
+    clearCanvas(aimCtx);
 }
 
 function eraseBackground() {
@@ -145,7 +187,7 @@ function drawLetters(context, rValue) {
     context.strokeText("Y", 250 + TEXT_OFFSET, 15);
 }
 
-foregroundCanvas.addEventListener('click', e => {
+aimCanvas.addEventListener('click', e => { // костыль с aimCanvas, т.к. он с бОльшим z-index
     let rValue = rFieldFromSlider.value;
 
     let scale = rValue / R_OFFSET;
