@@ -1,22 +1,16 @@
 package lab3.beans;
 
 import lab3.utils.ArrayUtils;
-import lab3.validation.ValidatorY;
-import lombok.AccessLevel;
+import lab3.utils.FacesUtils;
 import lombok.Data;
-import lombok.Getter;
 
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
-import javax.faces.component.UIComponent;
-import javax.faces.context.FacesContext;
-import javax.faces.validator.ValidatorException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import static javax.faces.application.FacesMessage.SEVERITY_WARN;
-import static lab3.utils.FacesUtils.addFacesMessage;
+import static javax.faces.application.FacesMessage.SEVERITY_ERROR;
 
 @ManagedBean(name = "hits")
 @ApplicationScoped
@@ -41,14 +35,14 @@ public class HitsBean implements Serializable {
 
     public boolean validateManualInputs() {
         if (!ArrayUtils.containsTrue(xArray)) { // no Xs chosen
-            addFacesMessage(SEVERITY_WARN, "Warning!", "Please select at least one X coordinate");
+            FacesUtils.addFacesMessage(SEVERITY_ERROR, "Please select at least one X coordinate");
             return false;
         }
         return true;
     }
 
     public void submitManualInputHit(float radius) {
-        if (validateManualInputs()) return;
+        if (!validateManualInputs()) return;
         for (int xChecked = 0; xChecked < xArray.length; xChecked++) {
             if (xArray[xChecked]) {
                 hitBeansList.add(new HitBean(X_VALUES[xChecked], y, radius));

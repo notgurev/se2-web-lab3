@@ -48,7 +48,7 @@
         <div class="p-col">
             <p:panel header="Manual inputs">
                 <h:form id="manual-input-form">
-                    <p:messages id="messages" showDetail="true" closable="true">
+                    <p:messages id="messages" showSummary="false" showDetail="true" closable="true">
                         <p:autoUpdate/>
                     </p:messages>
                     <div class="manual-input-block" id="x-checkboxes-block">
@@ -65,8 +65,11 @@
                     </div>
                     <div class="manual-input-block" id="y-input-text-block">
                         <h:outputLabel id="y-input-text-label" for="y-input-text" value="Y:" style="margin-right: 20px"/>
-                        <p:inputText id="y-input-text" value="#{hits.y}" required="true" style="flex-grow: 200">
-                            <f:validateDoubleRange minimum="-4" maximum="4"/>
+                        <p:inputText id="y-input-text" value="#{hits.y}" required="true" style="flex-grow: 200"
+                                     requiredMessage="Please enter the Y coordinate!"
+                                     converterMessage="Y must be a number in range (-4 ... 4)"
+                                     validatorMessage="Y must be in range (-4 ... 4)">
+                            <f:validator validatorId="rangeValidatorY"/>
                         </p:inputText>
                         <p:watermark for="@previous" value="(-4 ... 4)"/>
                     </div>
