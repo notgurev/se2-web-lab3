@@ -232,16 +232,3 @@ aimCanvas.addEventListener('click', e => { // костыль с aimCanvas, т.к
     console.log(x, y, rValue);
     window.submitCanvasClick();
 })
-
-// // todo
-// function rNotChosenError(enable) {
-//     let rInputBlock = document.getElementById("r_input_block");
-//     let error = "r-not-chosen-error";
-//     if (enable) {
-//         canvasContainer.classList.add(error);
-//         rInputBlock.classList.add(error);
-//     } else {
-//         canvasContainer.classList.remove(error);
-//         rInputBlock.classList.remove(error);
-//     }
-// }
