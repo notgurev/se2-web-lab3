@@ -3,6 +3,18 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee 
     http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
+
+    <managed-bean>
+        <managed-bean-name>clock</managed-bean-name>
+        <managed-bean-class>lab3.beans.ClockBean</managed-bean-class>
+        <managed-bean-scope>application</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>hits</managed-bean-name>
+        <managed-bean-class>lab3.beans.HitsBean</managed-bean-class>
+        <managed-bean-scope>application</managed-bean-scope>
+    </managed-bean>
+
     <navigation-rule>
         <from-view-id>/main.xhtml</from-view-id>
         <navigation-case>
@@ -12,6 +24,7 @@
             <redirect/>
         </navigation-case>
     </navigation-rule>
+
     <navigation-rule>
         <from-view-id>*</from-view-id>
         <navigation-case>

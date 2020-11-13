@@ -4,16 +4,12 @@ import lab3.utils.ArrayUtils;
 import lab3.utils.FacesUtils;
 import lombok.Data;
 
-import javax.faces.bean.ApplicationScoped;
-import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import static javax.faces.application.FacesMessage.SEVERITY_ERROR;
 
-@ManagedBean(name = "hits")
-@ApplicationScoped
 @Data
 public class HitsBean implements Serializable {
     private static final int[] X_VALUES = {-4, -3, -2, -1, 0, 1, 2, 3, 4};
