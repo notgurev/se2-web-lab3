@@ -17,8 +17,8 @@ import static javax.faces.application.FacesMessage.SEVERITY_ERROR;
 @Data
 public class HitsBean implements Serializable {
     private static final int[] X_VALUES = {-4, -3, -2, -1, 0, 1, 2, 3, 4};
-    private static final float MAX_Y = 4;
-    private static final float MIN_Y = -4;
+    private static final float MAX_Y = 3;
+    private static final float MIN_Y = -3;
 
     private final List<HitBean> hitBeansList = new ArrayList<>(); // Deque?
 

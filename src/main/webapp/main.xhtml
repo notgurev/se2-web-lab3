@@ -67,11 +67,11 @@
                         <h:outputLabel id="y-input-text-label" for="y-input-text" value="Y:" style="margin-right: 20px"/>
                         <p:inputText id="y-input-text" value="#{hits.y}" required="true" style="flex-grow: 200"
                                      requiredMessage="Please enter the Y coordinate!"
-                                     converterMessage="Y must be a number in range (-4 ... 4)"
-                                     validatorMessage="Y must be in range (-4 ... 4)">
+                                     converterMessage="Y must be a number in range (-3 ... 3)"
+                                     validatorMessage="Y must be in range (-3 ... 3)">
                             <f:validator validatorId="rangeValidatorY"/>
                         </p:inputText>
-                        <p:watermark for="@previous" value="(-4 ... 4)"/>
+                        <p:watermark for="@previous" value="(-3 ... 3)"/>
                     </div>
                     <div class="manual-input-block" id="r-command-buttons-block">
                         <h:outputText value="R:" style="margin-right: 20px"/>
