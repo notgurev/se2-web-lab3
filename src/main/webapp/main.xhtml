@@ -48,7 +48,9 @@
         <div class="p-col">
             <p:panel header="Manual inputs">
                 <h:form id="manual-input-form">
-                    <p:messages id="messages"/> <!--whatever this is-->
+                    <p:messages id="messages" showDetail="true" closable="true">
+                        <p:autoUpdate/>
+                    </p:messages>
                     <div class="manual-input-block" id="x-checkboxes-block">
                         <h:outputText value="X:"/>
                         <div><h:selectBooleanCheckbox value="#{hits.xArray[0]}"/>-4</div>
