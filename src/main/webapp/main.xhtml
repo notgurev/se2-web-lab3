@@ -3,7 +3,8 @@
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
 <h:head>
     <title>Main page</title>
     <h:outputStylesheet name="styles.css"/>
@@ -21,6 +22,18 @@
                         Canvas not supported
                     </canvas>
                 </div>
+                <h:form id="hidden-canvas-form">
+                    <h:inputHidden value="#{hits.canvasX}" id="hidden-x"/>
+                    <h:inputHidden value="#{hits.canvasY}" id="hidden-y"/>
+                    <h:inputHidden value="#{hits.canvasR}" id="hidden-r"/>
+                    <div style="display: flex; align-items: center">
+                        <h:outputText value="R:" style="margin-right: 10px"/>
+                        <h:outputText id="r-value-text" value="1.0" style="margin-right: 20px"/>
+                        <p:slider for="hidden-r" step="0.5" minValue="1" maxValue="3" onSlideEnd="sliderChange()"
+                                  style="margin-top: 10px; flex-grow: 100"/>
+                    </div>
+                    <p:remoteCommand name="submitCanvasClick" update="results-table" action="#{hits.submitCanvasClickHit}"/>
+                </h:form>
             </p:panel>
         </div>
         <div class="p-col">
@@ -49,11 +62,11 @@
                     <div class="manual-input-block" id="r-command-buttons-block">
                         <h:outputText value="R:" style="margin-right: 20px"/>
                         <div style="display: flex; justify-content: space-between; flex-grow: 200">
-                            <p:commandButton value=" 1 " update="results-table" action="#{hits.registerHit( 1 , false)}"/>
-                            <p:commandButton value="1.5" update="results-table" action="#{hits.registerHit(1.5, false)}"/>
-                            <p:commandButton value=" 2 " update="results-table" action="#{hits.registerHit( 2 , false)}"/>
-                            <p:commandButton value="2.5" update="results-table" action="#{hits.registerHit(2.5, false)}"/>
-                            <p:commandButton value=" 3 " update="results-table" action="#{hits.registerHit( 3 , false)}"/>
+                            <p:commandButton value=" 1 " update="results-table" action="#{hits.submitManualInputHit( 1 )}"/>
+                            <p:commandButton value="1.5" update="results-table" action="#{hits.submitManualInputHit(1.5)}"/>
+                            <p:commandButton value=" 2 " update="results-table" action="#{hits.submitManualInputHit( 2 )}"/>
+                            <p:commandButton value="2.5" update="results-table" action="#{hits.submitManualInputHit(2.5)}"/>
+                            <p:commandButton value=" 3 " update="results-table" action="#{hits.submitManualInputHit( 3 )}"/>
                         </div>
                     </div>
                 </h:form>

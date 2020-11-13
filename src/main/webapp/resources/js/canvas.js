@@ -6,7 +6,10 @@ let bCtx = backgroundCanvas.getContext("2d");
 let foregroundCanvas = document.getElementById("foreground-canvas");
 let fCtx = foregroundCanvas.getContext("2d");
 
-let rResultValue;
+let rFieldFromSlider = document.getElementById("hidden-canvas-form:hidden-r");
+let rValueText = document.getElementById("hidden-canvas-form:r-value-text");
+let xCanvasForm = document.getElementById("hidden-canvas-form:hidden-x");
+let yCanvasForm = document.getElementById("hidden-canvas-form:hidden-y");
 
 // Dimensions
 const CANVAS_WH = 500;
@@ -32,13 +35,44 @@ function drawPointOnGraph(x, y, r, successful) {
     fCtx.closePath();
 }
 
-window.onload = () => {
+function drawBackground() {
     drawShapes(bCtx);
     drawCoordsSystem(bCtx);
-    drawLetters(bCtx);
-    if (rResultValue !== undefined) drawPoints(rResultValue);
-};
+    drawLetters(bCtx, rFieldFromSlider.value);
+}
 
+function clearCanvas(context) {
+    context.clearRect(0, 0, CANVAS_WH, CANVAS_WH);
+}
+
+function eraseBackground() {
+    clearCanvas(bCtx);
+}
+
+function erasePoints() {
+    clearCanvas(fCtx);
+}
+
+function redrawAll() {
+    eraseBackground();
+    erasePoints();
+    drawAll();
+}
+
+function drawAll() {
+    drawBackground();
+    drawPoints();
+}
+
+window.onload = drawAll;
+
+// used in main.xhtml
+function sliderChange() {
+    redrawAll();
+    rValueText.innerText = (+rFieldFromSlider.value).toFixed(1);
+}
+
+// todo
 function drawPoints(currentR) {
     erasePoints();
     let xs = Array.from(document.getElementsByClassName("x-td")).map(v => v.innerHTML);
@@ -50,25 +84,21 @@ function drawPoints(currentR) {
     }
 }
 
-function erasePoints() {
-    fCtx.clearRect(0, 0, CANVAS_WH, CANVAS_WH);
-}
-
 function drawShapes(context) {
     context.fillStyle = SHAPES_COLOR;
     // прямоугольник
-    context.fillRect(150, 250, 100, 200);
+    context.fillRect(CANVAS_CENTER_X, CANVAS_CENTER_Y, R_OFFSET, R_OFFSET / 2);
     // треугольник
     context.moveTo(CANVAS_CENTER_X, CANVAS_CENTER_Y);
     context.beginPath();
-    context.lineTo(CANVAS_CENTER_X, CANVAS_CENTER_Y - R_OFFSET / 2);
+    context.lineTo(CANVAS_CENTER_X, CANVAS_CENTER_Y - R_OFFSET);
     context.lineTo(CANVAS_CENTER_X - R_OFFSET, CANVAS_CENTER_Y);
     context.lineTo(CANVAS_CENTER_X, CANVAS_CENTER_Y);
     context.fill();
     // четверть круга
     context.beginPath();
-    context.lineTo(CANVAS_CENTER_X, CANVAS_CENTER_Y - R_OFFSET / 2);
-    context.arc(CANVAS_CENTER_X, CANVAS_CENTER_Y, R_OFFSET / 2, 3 / 2 * Math.PI, 0);
+    context.lineTo(CANVAS_CENTER_X, CANVAS_CENTER_Y - R_OFFSET);
+    context.arc(CANVAS_CENTER_X, CANVAS_CENTER_Y, R_OFFSET, 3 / 2 * Math.PI, 0);
     context.lineTo(CANVAS_CENTER_X, CANVAS_CENTER_Y);
     context.fill();
 }
@@ -87,88 +117,62 @@ function drawCoordsSystem(context) {
     context.stroke();
 }
 
-// todo draw numbers instead of "R"s
-function drawLetters(context) {
+function drawLetters(context, rValue) {
     const TEXT_OFFSET = 5; //px
+
+    const R = String(rValue);
+    const HALF_R = String(rValue / 2);
+
     context.strokeStyle = LINES_COLOR;
     context.font = "15px Arial"
     // R
     context.textAlign = "center"
     // слева
-    context.strokeText("- R", CANVAS_CENTER_X - R_OFFSET, CANVAS_CENTER_Y - TEXT_OFFSET);
-    context.strokeText("- R/2", CANVAS_CENTER_X - R_OFFSET / 2, CANVAS_CENTER_Y - TEXT_OFFSET);
+    context.strokeText("- " + R, CANVAS_CENTER_X - R_OFFSET, CANVAS_CENTER_Y - TEXT_OFFSET);
+    context.strokeText("- " + HALF_R, CANVAS_CENTER_X - R_OFFSET / 2, CANVAS_CENTER_Y - TEXT_OFFSET);
     // справа
-    context.strokeText("R", CANVAS_CENTER_X + R_OFFSET, CANVAS_CENTER_Y - TEXT_OFFSET);
-    context.strokeText("R/2", CANVAS_CENTER_X + R_OFFSET / 2, CANVAS_CENTER_Y - TEXT_OFFSET);
+    context.strokeText(R, CANVAS_CENTER_X + R_OFFSET, CANVAS_CENTER_Y - TEXT_OFFSET);
+    context.strokeText(HALF_R, CANVAS_CENTER_X + R_OFFSET / 2, CANVAS_CENTER_Y - TEXT_OFFSET);
     // сверху
     context.textAlign = "left";
-    context.strokeText("R", CANVAS_CENTER_X + TEXT_OFFSET, CANVAS_CENTER_Y - R_OFFSET);
-    context.strokeText("R/2", CANVAS_CENTER_X + TEXT_OFFSET, CANVAS_CENTER_Y - R_OFFSET / 2);
+    context.strokeText(R, CANVAS_CENTER_X + TEXT_OFFSET, CANVAS_CENTER_Y - R_OFFSET);
+    context.strokeText(HALF_R, CANVAS_CENTER_X + TEXT_OFFSET, CANVAS_CENTER_Y - R_OFFSET / 2);
     // снизу
-    context.strokeText("- R", CANVAS_CENTER_X + TEXT_OFFSET, CANVAS_CENTER_Y + R_OFFSET);
-    context.strokeText("- R/2", CANVAS_CENTER_X + TEXT_OFFSET, CANVAS_CENTER_Y + R_OFFSET / 2);
+    context.strokeText("- " + R, CANVAS_CENTER_X + TEXT_OFFSET, CANVAS_CENTER_Y + R_OFFSET);
+    context.strokeText("- " + HALF_R, CANVAS_CENTER_X + TEXT_OFFSET, CANVAS_CENTER_Y + R_OFFSET / 2);
     // X, Y
     context.strokeText("X", 485, 250 - TEXT_OFFSET);
     context.strokeText("Y", 250 + TEXT_OFFSET, 15);
 }
 
-// todo переделать
-function sendData(xVal, yVal, rVal) {
-    console.log(`sending data with ${xVal}, ${yVal}, ${rVal}`);
-    post(contextPath + "/checkPoints", {
-        x: xVal,
-        y: yVal,
-        r: rVal
-    })
-}
+foregroundCanvas.addEventListener('click', e => {
+    let rValue = rFieldFromSlider.value;
 
-// todo переделать
-foregroundCanvas.addEventListener('click', (e) => {
-    if (checked_r === undefined && rResultValue === undefined) {
-        rNotChosenError(true);
-    } else {
-        let rValue = checked_r === undefined ? rResultValue : checked_r.value;
-        let scale = rValue / R_OFFSET;
+    let scale = rValue / R_OFFSET;
 
-        let canvasX = e.pageX - canvasContainer.offsetLeft;
-        let canvasY = e.pageY - canvasContainer.offsetTop;
+    let canvasX = e.pageX - canvasContainer.offsetLeft;
+    let canvasY = e.pageY - canvasContainer.offsetTop;
 
-        let x = Math.round((canvasX - CANVAS_CENTER_X) * scale);
-        let y = (CANVAS_CENTER_Y - canvasY) * scale;
+    let x = Math.round((canvasX - CANVAS_CENTER_X) * scale);
+    let y = (CANVAS_CENTER_Y - canvasY) * scale;
 
-        sendData(x, y, rValue);
-    }
-});
+    xCanvasForm.value = x;
+    yCanvasForm.value = y;
 
-// todo переделать
-function rNotChosenError(enable) {
-    let rInputBlock = document.getElementById("r_input_block");
-    let error = "r-not-chosen-error";
-    if (enable) {
-        canvasContainer.classList.add(error);
-        rInputBlock.classList.add(error);
-    } else {
-        canvasContainer.classList.remove(error);
-        rInputBlock.classList.remove(error);
-    }
-}
+    // jsf remote command call
+    console.log(x, y, rValue);
+    window.submitCanvasClick();
+})
 
-// todo переделать
-function post(path, params, method = 'post') {
-    let form = document.createElement('form');
-    form.method = method;
-    form.action = path;
-
-    for (let key in params) {
-        if (params.hasOwnProperty(key)) {
-            let hiddenField = document.createElement('input');
-            hiddenField.type = 'hidden';
-            hiddenField.name = key;
-            hiddenField.value = params[key];
-            form.appendChild(hiddenField);
-        }
-    }
-
-    document.body.appendChild(form);
-    form.submit();
-}
+// // todo
+// function rNotChosenError(enable) {
+//     let rInputBlock = document.getElementById("r_input_block");
+//     let error = "r-not-chosen-error";
+//     if (enable) {
+//         canvasContainer.classList.add(error);
+//         rInputBlock.classList.add(error);
+//     } else {
+//         canvasContainer.classList.remove(error);
+//         rInputBlock.classList.remove(error);
+//     }
+// }
