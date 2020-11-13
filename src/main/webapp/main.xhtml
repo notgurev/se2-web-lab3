@@ -99,19 +99,19 @@
         <div class="p-col">
             <p:panel header="Results">
                 <p:dataTable id="results-table"  var="hitEntry" value="#{hits.hitBeansList}">
-                    <p:column headerText="X">
+                    <p:column style="text-align: center;" headerText="X">
                         <h:outputText value="#{hitEntry.x}" />
                     </p:column>
 
-                    <p:column headerText="Y">
+                    <p:column style="text-align: center;" headerText="Y">
                         <h:outputText value="#{hitEntry.y}" />
                     </p:column>
 
-                    <p:column headerText="R">
+                    <p:column style="text-align: center;" headerText="R">
                         <h:outputText value="#{hitEntry.r}" />
                     </p:column>
 
-                    <p:column headerText="Результат">
+                    <p:column style="text-align: center;" headerText="Результат">
                         <h:outputText value="#{hitEntry.successful}" />
                     </p:column>
                 </p:dataTable>
