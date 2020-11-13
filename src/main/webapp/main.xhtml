@@ -66,11 +66,16 @@
                     <div class="manual-input-block" id="r-command-buttons-block">
                         <h:outputText value="R:" style="margin-right: 20px"/>
                         <div style="display: flex; justify-content: space-between; flex-grow: 200">
-                            <p:commandButton value=" 1 " update="results-table" action="#{hits.submitManualInputHit( 1 )}"/>
-                            <p:commandButton value="1.5" update="results-table" action="#{hits.submitManualInputHit(1.5)}"/>
-                            <p:commandButton value=" 2 " update="results-table" action="#{hits.submitManualInputHit( 2 )}"/>
-                            <p:commandButton value="2.5" update="results-table" action="#{hits.submitManualInputHit(2.5)}"/>
-                            <p:commandButton value=" 3 " update="results-table" action="#{hits.submitManualInputHit( 3 )}"/>
+                            <p:commandButton value=" 1 " update="results-table"
+                                             action="#{hits.submitManualInputHit( 1 )}" oncomplete="redrawPoints()"/>
+                            <p:commandButton value="1.5" update="results-table"
+                                             action="#{hits.submitManualInputHit(1.5)}" oncomplete="redrawPoints()"/>
+                            <p:commandButton value=" 2 " update="results-table"
+                                             action="#{hits.submitManualInputHit( 2 )}" oncomplete="redrawPoints()"/>
+                            <p:commandButton value="2.5" update="results-table"
+                                             action="#{hits.submitManualInputHit(2.5)}" oncomplete="redrawPoints()"/>
+                            <p:commandButton value=" 3 " update="results-table"
+                                             action="#{hits.submitManualInputHit( 3 )}" oncomplete="redrawPoints()"/>
                         </div>
                     </div>
                 </h:form>
