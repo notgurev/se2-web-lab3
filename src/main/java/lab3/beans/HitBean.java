@@ -13,11 +13,13 @@ public class HitBean implements Serializable {
     private Float y;
     private float r;
     private boolean successful;
+    private String fancySuccessful;
 
     public HitBean(int x, Float y, float r) {
         this.x = x;
         this.y = y;
         this.r = r;
         successful = HitChecker.checkArea(x, y, r);
+        fancySuccessful = successful ? "hit" : "miss";
     }
 }

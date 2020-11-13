@@ -131,7 +131,7 @@ function getPoints() {
             x: +cells[0].innerText,
             y: +cells[1].innerText,
             r: +cells[2].innerText,
-            successful: cells[3].innerText === "true"
+            successful: cells[3].innerText.includes("hit")
         }
     })
 }
