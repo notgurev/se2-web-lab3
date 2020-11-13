@@ -17,6 +17,8 @@ import static javax.faces.application.FacesMessage.SEVERITY_ERROR;
 @Data
 public class HitsBean implements Serializable {
     private static final int[] X_VALUES = {-4, -3, -2, -1, 0, 1, 2, 3, 4};
+    private static final float MAX_Y = 4;
+    private static final float MIN_Y = -4;
 
     private final List<HitBean> hitBeansList = new ArrayList<>(); // Deque?
 
@@ -33,9 +35,17 @@ public class HitsBean implements Serializable {
         hitBeansList.clear();
     }
 
-    public boolean validateManualInputs() {
+    private boolean validateManualInputs() {
         if (!ArrayUtils.containsTrue(xArray)) { // no Xs chosen
             FacesUtils.addFacesMessage(SEVERITY_ERROR, "Please select at least one X coordinate");
+            return false;
+        }
+        return true;
+    }
+
+    private boolean validateCanvasYLimits() {
+        if (canvasY <= MIN_Y || canvasY >= MAX_Y) {
+            FacesUtils.addFacesMessage(SEVERITY_ERROR, "Y must be in range (-4 ... 4)");
             return false;
         }
         return true;
@@ -51,6 +61,7 @@ public class HitsBean implements Serializable {
     }
 
     public void submitCanvasClickHit() {
+        if (!validateCanvasYLimits()) return;
         hitBeansList.add(new HitBean(canvasX, canvasY, canvasR));
     }
 
