@@ -38,6 +38,11 @@
                     <p:remoteCommand name="submitCanvasClick" update="results-table" action="#{hits.submitCanvasClickHit}"
                     oncomplete="redrawPoints()"/>
                 </h:form>
+                <div style="display: flex; justify-content: center; margin-top: 15px">
+                    <input type="checkbox" id="checkbox-limit-with-matching-r" onchange="redrawPoints()">
+                        Only display with corresponding radius
+                    </input>
+                </div>
             </p:panel>
         </div>
         <div class="p-col">

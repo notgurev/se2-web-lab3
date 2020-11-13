@@ -14,6 +14,8 @@ let rValueText = document.getElementById("hidden-canvas-form:r-value-text");
 let xCanvasForm = document.getElementById("hidden-canvas-form:hidden-x");
 let yCanvasForm = document.getElementById("hidden-canvas-form:hidden-y");
 
+let matchingRadsCheckbox = document.getElementById("checkbox-limit-with-matching-r");
+
 // Dimensions
 const CANVAS_WH = 500;
 const CANVAS_CENTER_X = 250;
@@ -62,12 +64,12 @@ aimCanvas.addEventListener('mousemove', e => {
     aimCtx.closePath();
 })
 
-function drawPointOnGraph(x, y, r, successful) {
+function drawPointOnGraph(x, y, successful) {
     fCtx.fillStyle = successful ? "lawngreen" : "red";
     fCtx.beginPath();
     fCtx.arc(
-        CANVAS_CENTER_X + x * R_OFFSET / r,
-        CANVAS_CENTER_Y - y * R_OFFSET / r, POINT_RADIUS, 0, 2 * Math.PI);
+        CANVAS_CENTER_X + x * R_OFFSET / rFieldFromSlider.value,
+        CANVAS_CENTER_Y - y * R_OFFSET / rFieldFromSlider.value, POINT_RADIUS, 0, 2 * Math.PI);
     fCtx.stroke();
     fCtx.fill();
     fCtx.closePath();
@@ -126,9 +128,9 @@ function getPoints() {
     return Array.from(table.children).map(tr => {
         let cells = tr.cells;
         return {
-            x: cells[0].innerText,
-            y: cells[1].innerText,
-            r: cells[2].innerText,
+            x: +cells[0].innerText,
+            y: +cells[1].innerText,
+            r: +cells[2].innerText,
             successful: cells[3].innerText === "true"
         }
     })
@@ -136,11 +138,18 @@ function getPoints() {
 
 function drawPoints() {
     erasePoints();
+    let selectedR = +rFieldFromSlider.value;
     let points = getPoints();
     if (points !== undefined) {
-        getPoints().forEach(point => {
-            drawPointOnGraph(point.x, point.y, rFieldFromSlider.value, point.successful);
-        })
+        if (matchingRadsCheckbox.checked) {
+            getPoints().forEach(point => {
+                if (point.r === selectedR) drawPointOnGraph(point.x, point.y, point.successful);
+            })
+        } else {
+            getPoints().forEach(point => {
+                drawPointOnGraph(point.x, point.y, point.successful);
+            })
+        }
     }
 }
 
