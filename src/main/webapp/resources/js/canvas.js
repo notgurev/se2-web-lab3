@@ -121,6 +121,8 @@ function sliderChange() {
 
 function getPoints() {
     let table = document.getElementById("results-table_data");
+    if (table.childElementCount === 1 && Array.from(table.children[0].classList).includes("ui-datatable-empty-message"))
+        return;
     return Array.from(table.children).map(tr => {
         let cells = tr.cells;
         return {

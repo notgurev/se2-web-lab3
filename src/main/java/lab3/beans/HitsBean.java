@@ -29,6 +29,10 @@ public class HitsBean implements Serializable {
     private Float canvasY;
     private Float canvasR = 1f;
 
+    public void clear() {
+        hitBeansList.clear();
+    }
+
     public void submitManualInputHit(float radius) {
         for (int xChecked = 0; xChecked < xArray.length; xChecked++) {
             if (xArray[xChecked]) {
