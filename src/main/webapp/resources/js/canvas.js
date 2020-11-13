@@ -7,7 +7,7 @@ let foregroundCanvas = document.getElementById("foreground-canvas");
 let fCtx = foregroundCanvas.getContext("2d");
 
 let aimCanvas = document.getElementById("aim-canvas");
-let aimCtx = foregroundCanvas.getContext("2d");
+let aimCtx = aimCanvas.getContext("2d");
 
 let rFieldFromSlider = document.getElementById("hidden-canvas-form:hidden-r");
 let rValueText = document.getElementById("hidden-canvas-form:r-value-text");
@@ -25,12 +25,8 @@ const LINES_COLOR = "#000000";
 const SHAPES_COLOR = "#43b581";
 // Points
 const POINT_OUTLINE_COLOR = "#000000";
-const POINT_OUTLINE_WIDTH = 2;
+const POINT_OUTLINE_WIDTH = 3;
 const POINT_RADIUS = 4;
-
-aimCtx.strokeStyle = POINT_OUTLINE_COLOR;
-aimCtx.fillStyle = 'yellow';
-aimCtx.lineWidth = 2;
 
 function canvasX(event) {
     return event.pageX - canvasContainer.offsetLeft;
@@ -40,7 +36,13 @@ function canvasY(event) {
     return event.pageY - canvasContainer.offsetTop;
 }
 
-aimCanvas.addEventListener('mouseout', eraseAim)
+aimCtx.strokeStyle = POINT_OUTLINE_COLOR;
+aimCtx.fillStyle = 'yellow';
+aimCtx.lineWidth = POINT_OUTLINE_WIDTH;
+fCtx.strokeStyle = POINT_OUTLINE_COLOR;
+fCtx.lineWidth = POINT_OUTLINE_WIDTH;
+
+aimCanvas.addEventListener('mouseout', eraseAim);
 
 aimCanvas.addEventListener('mousemove', e => {
     eraseAim();
@@ -55,15 +57,13 @@ aimCanvas.addEventListener('mousemove', e => {
         canvasY(e),
         POINT_RADIUS, 0, 2 * Math.PI
     );
-    aimCtx.fill();
     aimCtx.stroke();
+    aimCtx.fill();
     aimCtx.closePath();
 })
 
 function drawPointOnGraph(x, y, r, successful) {
     fCtx.fillStyle = successful ? "lawngreen" : "red";
-    fCtx.strokeStyle = POINT_OUTLINE_COLOR;
-    fCtx.lineWidth = 3;
     fCtx.beginPath();
     fCtx.arc(
         CANVAS_CENTER_X + x * R_OFFSET / r,
@@ -101,6 +101,11 @@ function redrawAll() {
     drawAll();
 }
 
+function redrawPoints() {
+    erasePoints();
+    drawPoints()
+}
+
 function drawAll() {
     drawBackground();
     drawPoints();
@@ -114,15 +119,26 @@ function sliderChange() {
     rValueText.innerText = (+rFieldFromSlider.value).toFixed(1);
 }
 
-// todo
-function drawPoints(currentR) {
+function getPoints() {
+    let table = document.getElementById("results-table_data");
+    return Array.from(table.children).map(tr => {
+        let cells = tr.cells;
+        return {
+            x: cells[0].innerText,
+            y: cells[1].innerText,
+            r: cells[2].innerText,
+            successful: cells[3].innerText === "true"
+        }
+    })
+}
+
+function drawPoints() {
     erasePoints();
-    let xs = Array.from(document.getElementsByClassName("x-td")).map(v => v.innerHTML);
-    let ys = Array.from(document.getElementsByClassName("y-td")).map(v => v.innerHTML);
-    let success = Array.from(document.getElementsByClassName("success-td"))
-        .map(v => v.innerHTML.includes("Попадание"));
-    for (let i = 0; i < xs.length; i++) {
-        drawPointOnGraph(xs[i], ys[i], currentR, success[i]);
+    let points = getPoints();
+    if (points !== undefined) {
+        getPoints().forEach(point => {
+            drawPointOnGraph(point.x, point.y, rFieldFromSlider.value, point.successful);
+        })
     }
 }
 

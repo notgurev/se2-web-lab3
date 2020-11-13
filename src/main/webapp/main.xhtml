@@ -35,7 +35,8 @@
                         <p:slider for="hidden-r" step="0.5" minValue="1" maxValue="3" onSlideEnd="sliderChange()"
                                   style="margin-top: 10px; flex-grow: 100"/>
                     </div>
-                    <p:remoteCommand name="submitCanvasClick" update="results-table" action="#{hits.submitCanvasClickHit}"/>
+                    <p:remoteCommand name="submitCanvasClick" update="results-table" action="#{hits.submitCanvasClickHit}"
+                    oncomplete="redrawPoints()"/>
                 </h:form>
             </p:panel>
         </div>
@@ -77,7 +78,7 @@
         </div>
         <div class="p-col">
             <p:panel header="Results">
-                <p:dataTable id="results-table" var="hitEntry" value="#{hits.hitBeansList}">
+                <p:dataTable id="results-table"  var="hitEntry" value="#{hits.hitBeansList}">
                     <p:column headerText="X">
                         <h:outputText value="#{hitEntry.x}" />
                     </p:column>
