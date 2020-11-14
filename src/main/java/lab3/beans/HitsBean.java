@@ -44,15 +44,6 @@ public class HitsBean implements Serializable {
         return Arrays.asList(X_VALUES).contains(canvasX);
     }
 
-    // todo remove that
-    private boolean validateCanvasYLimits() {
-        if (canvasY <= MIN_Y || canvasY >= MAX_Y) {
-            FacesUtils.addFacesMessage(SEVERITY_ERROR, "Y must be in range (-4 ... 4)");
-            return false;
-        }
-        return true;
-    }
-
     public void submitManualInputHit(float radius) {
         if (!validateManualInputs()) return;
         for (int xChecked = 0; xChecked < xArray.length; xChecked++) {
@@ -64,7 +55,6 @@ public class HitsBean implements Serializable {
 
     public void submitCanvasClickHit() {
         if (!validateCanvasX()) return;
-        if (!validateCanvasYLimits()) return;
         hitBeansList.add(new HitBean(canvasX, canvasY, canvasR));
     }
 

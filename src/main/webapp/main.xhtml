@@ -27,7 +27,9 @@
                 </div>
                 <h:form id="hidden-canvas-form">
                     <h:inputHidden value="#{hits.canvasX}" id="hidden-x"/>
-                    <h:inputHidden value="#{hits.canvasY}" id="hidden-y"/>
+                    <h:inputHidden value="#{hits.canvasY}" id="hidden-y">
+                        <f:validator validatorId="rangeValidatorY"/>
+                    </h:inputHidden>
                     <h:inputHidden value="#{hits.canvasR}" id="hidden-r"/>
                     <div style="display: flex; align-items: center">
                         <h:outputText value="R:" style="margin-right: 10px"/>
