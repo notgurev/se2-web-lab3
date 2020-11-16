@@ -17,7 +17,9 @@ public class HitsManager implements Serializable {
     private static final float MAX_Y = 3;
     private static final float MIN_Y = -3;
 
-    private final List<Hit> hitBeansList = new ArrayList<>(); // Deque?
+    //    @Inject
+//    private Repository<Hit> hitRepository;
+    private final List<Hit> hitBeansList = new ArrayList<>(); // Deque? todo remove initialization
 
     // Manual input
     private boolean[] manualInputXs = new boolean[9];
@@ -30,6 +32,7 @@ public class HitsManager implements Serializable {
 
     public void clear() {
         hitBeansList.clear();
+//        hitRepository.clear();
     }
 
     private boolean validateManualInputs() {
@@ -44,17 +47,23 @@ public class HitsManager implements Serializable {
         return Arrays.asList(X_VALUES).contains(canvasX);
     }
 
+    private void addHit(int x, float y, float r) {
+        Hit hit = new Hit(x, y, r);
+        hitBeansList.add(hit);
+//        hitRepository.save(hit);
+    }
+
     public void submitManualInputHit(float radius) {
         if (!validateManualInputs()) return;
         for (int xChecked = 0; xChecked < manualInputXs.length; xChecked++) {
             if (manualInputXs[xChecked]) {
-                hitBeansList.add(new Hit(X_VALUES[xChecked], y, radius));
+                addHit(X_VALUES[xChecked], y, radius);
             }
         }
     }
 
     public void submitCanvasClickHit() {
         if (!validateCanvasX()) return;
-        hitBeansList.add(new Hit(canvasX, canvasY, canvasR));
+        addHit(canvasX, canvasY, canvasR);
     }
 }
