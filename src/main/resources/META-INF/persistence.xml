@@ -9,9 +9,15 @@ http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <class>lab3.beans.Hit</class>
         <properties>
-            <property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@localhost:1521:oracle"/>
-            <property name="javax.persistence.jdbc.user" value="SYS"/>
-            <property name="javax.persistence.jdbc.password" value="admin"/>
+            <!-- local -->
+<!--            <property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@localhost:1521:oracle"/>-->
+<!--            <property name="javax.persistence.jdbc.user" value="SYS"/>-->
+<!--            <property name="javax.persistence.jdbc.password" value="admin"/>-->
+            <!-- helios -->
+            <property name="javax.persistence.jdbc.user" value="s286528"/>
+            <property name="javax.persistence.jdbc.password" value="haha password"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@localhost:1521:orbis"/>
+            <!-- common -->
             <property name="javax.persistence.jdbc.driver" value="oracle.jdbc.OracleDriver"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.Oracle8iDialect"/>
             <property name="javax.persistence.schema-generation.database.action" value="create"/>
