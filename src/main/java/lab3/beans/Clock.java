@@ -7,11 +7,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Data
-public class ClockBean implements Serializable {
+public class Clock implements Serializable {
     private final SimpleDateFormat sdfDate = new SimpleDateFormat("HH:mm:ss yyyy.MM.dd");
     private String time;
 
-    public ClockBean() {
+    public Clock() {
         time = sdfDate.format(new Date());
     }
 

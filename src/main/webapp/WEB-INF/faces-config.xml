@@ -6,12 +6,12 @@
 
     <managed-bean>
         <managed-bean-name>clock</managed-bean-name>
-        <managed-bean-class>lab3.beans.ClockBean</managed-bean-class>
+        <managed-bean-class>lab3.beans.Clock</managed-bean-class>
         <managed-bean-scope>application</managed-bean-scope>
     </managed-bean>
     <managed-bean>
         <managed-bean-name>hits</managed-bean-name>
-        <managed-bean-class>lab3.beans.HitsBean</managed-bean-class>
+        <managed-bean-class>lab3.beans.HitsManager</managed-bean-class>
         <managed-bean-scope>application</managed-bean-scope>
     </managed-bean>
 

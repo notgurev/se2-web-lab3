@@ -12,12 +12,12 @@ import java.util.List;
 import static javax.faces.application.FacesMessage.SEVERITY_ERROR;
 
 @Data
-public class HitsBean implements Serializable {
+public class HitsManager implements Serializable {
     private static final Integer[] X_VALUES = {-4, -3, -2, -1, 0, 1, 2, 3, 4};
     private static final float MAX_Y = 3;
     private static final float MIN_Y = -3;
 
-    private final List<HitBean> hitBeansList = new ArrayList<>(); // Deque?
+    private final List<Hit> hitBeansList = new ArrayList<>(); // Deque?
 
     // Manual input
     private boolean[] manualInputXs = new boolean[9];
@@ -48,13 +48,13 @@ public class HitsBean implements Serializable {
         if (!validateManualInputs()) return;
         for (int xChecked = 0; xChecked < manualInputXs.length; xChecked++) {
             if (manualInputXs[xChecked]) {
-                hitBeansList.add(new HitBean(X_VALUES[xChecked], y, radius));
+                hitBeansList.add(new Hit(X_VALUES[xChecked], y, radius));
             }
         }
     }
 
     public void submitCanvasClickHit() {
         if (!validateCanvasX()) return;
-        hitBeansList.add(new HitBean(canvasX, canvasY, canvasR));
+        hitBeansList.add(new Hit(canvasX, canvasY, canvasR));
     }
 }
