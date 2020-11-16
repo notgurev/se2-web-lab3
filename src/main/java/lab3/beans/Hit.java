@@ -20,7 +20,7 @@ public class Hit implements Serializable {
     private Float y;
     @Column(name = "r", nullable = false)
     private float r;
-    @Column(name = "successful", nullable = false)
+    @Column(name = "success", nullable = false)
     private boolean successful;
 
     public Hit(int x, Float y, float r) {
