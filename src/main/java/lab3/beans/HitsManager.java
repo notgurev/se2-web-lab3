@@ -1,11 +1,12 @@
 package lab3.beans;
 
-import lab3.database.HitRepository;
 import lab3.database.Repository;
 import lab3.utils.ArrayUtils;
 import lab3.utils.FacesUtils;
 import lombok.Data;
 
+import javax.annotation.PostConstruct;
+import javax.inject.Inject;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
@@ -18,8 +19,9 @@ public class HitsManager implements Serializable {
     private static final float MAX_Y = 3;
     private static final float MIN_Y = -3;
 
-    private Repository<Hit> hitRepository = new HitRepository(); // todo @inject (and @Default or something)
-    private List<Hit> hitBeansList = hitRepository.getAll(); // todo make a @PostConstruct init if hitRep is injected
+    @Inject
+    private Repository<Hit> hitRepository;
+    private List<Hit> hitBeansList;
 
     // Manual input
     private boolean[] manualInputXs = new boolean[9];
@@ -29,6 +31,11 @@ public class HitsManager implements Serializable {
     private int canvasX;
     private Float canvasY;
     private Float canvasR = 1f;
+
+    @PostConstruct
+    private void init() {
+        hitBeansList = hitRepository.getAll();
+    }
 
     public void clear() {
         hitBeansList.clear();

@@ -2,23 +2,34 @@ package lab3.database;
 
 import lab3.beans.Hit;
 
-import java.util.ArrayList;
+import javax.enterprise.inject.Default;
+import javax.faces.bean.ApplicationScoped;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 import java.util.List;
 
+@Default
+@ApplicationScoped
 public class HitRepository implements Repository<Hit> {
+    @PersistenceContext(name = "HitsUnit")
+    private EntityManager entityManager;
+
     @Override
+    @Transactional
     public void clear() {
-        // todo
+        entityManager.createQuery("delete from Hit").executeUpdate();
     }
 
     @Override
+    @Transactional
     public void save(Hit hit) {
-        // todo
+        entityManager.persist(hit);
+        entityManager.flush();
     }
 
     @Override
     public List<Hit> getAll() {
-        // todo
-        return new ArrayList<>();
+        return entityManager.createQuery("Select hit from Hit hit", Hit.class).getResultList();
     }
 }
