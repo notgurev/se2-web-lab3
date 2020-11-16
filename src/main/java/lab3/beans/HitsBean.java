@@ -20,7 +20,7 @@ public class HitsBean implements Serializable {
     private final List<HitBean> hitBeansList = new ArrayList<>(); // Deque?
 
     // Manual input
-    private boolean[] xArray = new boolean[9];
+    private boolean[] manualInputXs = new boolean[9];
     private Float y;
 
     // Canvas input
@@ -33,7 +33,7 @@ public class HitsBean implements Serializable {
     }
 
     private boolean validateManualInputs() {
-        if (!ArrayUtils.containsTrue(xArray)) { // no Xs chosen
+        if (!ArrayUtils.containsTrue(manualInputXs)) { // no Xs chosen
             FacesUtils.addFacesMessage(SEVERITY_ERROR, "Please select at least one X coordinate");
             return false;
         }
@@ -46,8 +46,8 @@ public class HitsBean implements Serializable {
 
     public void submitManualInputHit(float radius) {
         if (!validateManualInputs()) return;
-        for (int xChecked = 0; xChecked < xArray.length; xChecked++) {
-            if (xArray[xChecked]) {
+        for (int xChecked = 0; xChecked < manualInputXs.length; xChecked++) {
+            if (manualInputXs[xChecked]) {
                 hitBeansList.add(new HitBean(X_VALUES[xChecked], y, radius));
             }
         }
@@ -56,13 +56,5 @@ public class HitsBean implements Serializable {
     public void submitCanvasClickHit() {
         if (!validateCanvasX()) return;
         hitBeansList.add(new HitBean(canvasX, canvasY, canvasR));
-    }
-
-    public boolean[] getxArray() {
-        return xArray;
-    }
-
-    public void setxArray(boolean[] xArray) {
-        this.xArray = xArray;
     }
 }
