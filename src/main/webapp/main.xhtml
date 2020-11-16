@@ -92,8 +92,10 @@
                     </div>
                 </h:form>
                 <div style="display: flex; justify-content: center">
-                    <p:commandButton value=" Clear " update="results-table" action="#{hits.clear}"
-                                     oncomplete="redrawPoints()" style="margin-right: 10px"/>
+                    <h:form>
+                        <p:commandButton value=" Clear " update="results-table" action="#{hits.clear}"
+                                         oncomplete="redrawPoints()" style="margin-right: 10px"/>
+                    </h:form>
                     <p:button outcome="start" value="Back to start page" style="margin-left: 10px"/>
                 </div>
             </p:panel>
