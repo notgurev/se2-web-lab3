@@ -2,6 +2,7 @@ package lab3.database;
 
 import lab3.beans.Hit;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class HitRepository implements Repository<Hit> {
@@ -18,6 +19,6 @@ public class HitRepository implements Repository<Hit> {
     @Override
     public List<Hit> getAll() {
         // todo
-        return null;
+        return new ArrayList<>();
     }
 }
