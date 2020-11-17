@@ -14,10 +14,10 @@
         <managed-bean-class>lab3.beans.HitsManager</managed-bean-class>
         <managed-bean-scope>application</managed-bean-scope>
     </managed-bean>
-    <managed-bean eager="true">
+    <managed-bean>
         <managed-bean-name>hitRepository</managed-bean-name>
         <managed-bean-class>lab3.database.HitRepository</managed-bean-class>
-        <managed-bean-scope>application</managed-bean-scope>
+        <managed-bean-scope>none</managed-bean-scope>
     </managed-bean>
 
     <navigation-rule>

@@ -3,7 +3,6 @@ package lab3.database;
 import lab3.beans.Hit;
 
 import javax.enterprise.inject.Default;
-import javax.faces.bean.ApplicationScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
