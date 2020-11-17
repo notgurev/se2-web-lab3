@@ -10,7 +10,6 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 @Default
-@ApplicationScoped
 public class HitRepository implements Repository<Hit> {
     @PersistenceContext(name = "HitsUnit")
     private EntityManager entityManager;
